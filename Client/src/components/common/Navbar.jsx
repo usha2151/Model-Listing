@@ -1,8 +1,16 @@
 import React from "react";
 import { worldmodelhuntlogo } from "../images";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    console.log(document.cookie);
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    navigate('/signin')
+  };
+
   return (
     <>
      <nav className="container mx-auto lg:px-16 sm:px-0 bg-gray-900 text-dark py-2 w-3/4">
@@ -37,11 +45,6 @@ const Navbar = () => {
           About Us
         </Link>
       </li>
-      <li className="hover:text-purple hover:border-b-2 hover.border-purple">
-        <Link to="/model_profile" className="font-semibold">
-          Model Profile
-        </Link>
-      </li>
       <li className="flex">
         <span>
           <i class="fa-solid fa-lg fa-user text-purple text-h4"></i>&nbsp;
@@ -54,6 +57,11 @@ const Navbar = () => {
         Register 
         </Link>
        
+      </li>
+      <li className="hover:text-purple hover:border-b-2 hover.border-purple">
+        <button onClick={handleLogout} className="font-semibold">
+          Logout
+        </button>
       </li>
     </ul>
 

@@ -14,18 +14,23 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {user}=useSelector(state=>state.authReducer.user)
-  // console.log('fjdksafjkdlf',user.email);
 
-  // useEffect(() => {
-  //   const token = document.cookie;
-  // console.log(token);
-  //   if (token) {
-  //     dispatch(verifyToken(token))
-  //   }
-  //   else{
-  //     navigate('/signin')
-  //   }
-  // }, []);
+  if(user){
+    
+  console.log('fjdksafjkdlf',user.email);
+  }
+  useEffect(() => {
+    const codedToken = document.cookie;
+    const token=codedToken.split('=')[1]
+  
+  console.log(token);
+    if (token) {
+      dispatch(verifyToken(token))
+    }
+    else{
+      navigate('/signin')
+    }
+  }, []);
 
   return (
     <>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom";
 
 
-const Modalprofileexpertise = () => {
+const Modalprofileexpertise = ({props}) => {
 
   
     return (
@@ -13,7 +13,7 @@ const Modalprofileexpertise = () => {
                     <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 lg:gap-40 xl:gap-40 md:gap-10'>
                         {/* Right side */}
                         <div className='grid m-5 text-white  gap-8'>
-                            <div className='text-h3 text-bold font-sora text-white'> Sweta Bhatiya </div>
+                            <div className='text-h3 text-bold font-sora text-white'> {props.name} </div>
                             <div className='font-sora lg:w-4/5 md:w-full sm:full'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
                             <div className='pb-4'>
                             <span className=' border-white border p-3 font-sora'> Contact Now </span>
@@ -71,7 +71,7 @@ const Modalprofileexpertise = () => {
                                             </div>
                                             <div>
                                                 <ul className='p-5 px-3'>
-                                                    <li className='py-3' s>Fashion Model</li>
+                                                    <li className='py-3' s>{props.specialization} Model</li>
                                                     <li className='py-3' s>2 Years </li>
                                                     <li className='py-3' s>*******4.5</li>
                                                 </ul>
