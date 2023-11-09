@@ -25,29 +25,33 @@ export  const upload = multer({ storage: storage });
 
 // Register a model
 export const addModels = async (req, res) => {
-  console.log(req.body);
   const { name, email, experience, mobile, specialization, password } = req.body; // Destructure these values from req.body
-   // Hash the user's password before saving it
-   const saltRounds = 10; // You can adjust the number of salt rounds
-   const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+  // Hash the user's password before saving it
+  const saltRounds = 10; // You can adjust the number of salt rounds
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   try {
     if (!name || !email || !experience || !mobile || !specialization || !password) {
       return res.status(422).json({ error: "Please fill in all required fields." });
     }
 
-    // You should have your Models schema/model defined and imported here
-    // Example: const newModel = new Models({
+    // Create a new model instance with the required data
     const newModel = new Models({
       name,
       email,
       mobile,
       experience,
       specialization,
-      image: req.file ? req.file.filename : null, // File path or null if no file uploaded
       password: hashedPassword, // Hashed password
-    });
 
+      // Check if a single file is uploaded
+      image: req.file ? req.file.filename : null,
+
+      // Check if multiple files are uploaded
+      files: req.files ? req.files.map((file) => file.path) : [],
+    });
+  console.log(files);
     await newModel.save();
 
     return res.status(201).json(newModel);

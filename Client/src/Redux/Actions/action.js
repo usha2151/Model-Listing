@@ -29,6 +29,10 @@ export function Register(data) {
   formData.append('experience', data.experience);
   formData.append('file', data.file);
   formData.append('password', data.password);
+    // Append each image file to formData using the 'files' key
+    data.files.forEach((file, index) => {
+      formData.append('files', file);
+    });
 
   return (dispatch) => {
   

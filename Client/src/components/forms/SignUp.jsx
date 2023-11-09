@@ -18,20 +18,40 @@ const SignUp = () => {
     specialization: "",
     experience: "",
     file: null, // Add an image property to the user object
+    files:[],
     password: "",
     confirm_password: "",
   });
 
 
-  const setdata = (e) => {
-    const { name, value, type } = e.target;
-    if (type === 'file') {
+  // const setdata = (e) => {
+  //   const { name, value, type } = e.target;
+  //   if (type === 'file') {
       
-      setFormData({ ...formData, [name]: e.target.files[0] });
+  //     setFormData({ ...formData, [name]: e.target.files[0] });
      
-    } else {
+  //   } else {
       
    
+  //     setFormData({ ...formData, [name]: value });
+  //   }
+  // };
+  const setdata = (e) => {
+    const { name, type } = e.target;
+    if (type === 'file') {
+      // Handle file input
+      const files = e.target.files;
+      if (name === 'file') {
+        // For the single image input
+        setFormData({ ...formData, singleImage: files[0] });
+      } else if (name === 'files') {
+        // For the multiple image input
+        const selectedFiles = Array.from(files);
+        setFormData({ ...formData, multipleImages: selectedFiles });
+      }
+    } else {
+      // Handle other input types (e.g., text)
+      const value = e.target.value;
       setFormData({ ...formData, [name]: value });
     }
   };
@@ -215,7 +235,7 @@ const SignUp = () => {
                                   placeholder=" "
                                 />
                              <label class="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-black transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-purple after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25]  peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-purple peer-focus:after:scale-x-100 peer-focus:after:border-purple peer-disabled:text-transparent">
-                                  Picture
+                                Gallary
                                 </label>
                               </div>
                             {/* multiple file */}
