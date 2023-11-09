@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {  useSelector } from "react-redux";
 import {
   HeroVideo,
   worldmodelhuntlogo,
@@ -9,6 +10,7 @@ import {
 } from "../../images";
 
 const Hero = () => {
+  const user =useSelector(state => state.authReducer);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpansion = () => {

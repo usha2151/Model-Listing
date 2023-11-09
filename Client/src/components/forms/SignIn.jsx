@@ -20,7 +20,7 @@ console.log("users data", user);
   useEffect(() => {
     if (user && user.token) {
       // Check if the user object and token property exist
-      console.log(user.token);
+      console.log("userToken",user.token);
       document.cookie = `token=${user.token}; expires=1h; path=/`;
       const token = document.cookie;
       console.log("token", token);
@@ -29,6 +29,7 @@ console.log("users data", user);
         navigate("/");
       }
     }
+
   }, [user]);
 
   return (

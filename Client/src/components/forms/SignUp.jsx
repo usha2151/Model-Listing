@@ -56,7 +56,7 @@ const SignUp = () => {
       return;
     }
   
-    console.log(formData); // Log the user object to the console
+    // console.log(formData); // Log the user object to the console
   
     // Add additional password validation logic here if needed
   
