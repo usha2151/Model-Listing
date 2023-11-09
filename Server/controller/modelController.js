@@ -114,3 +114,41 @@ export const loginModels = async (req, res) => {
   }
 };
 
+
+
+// get individual user
+
+export const getModelsByid = async (req, res) => {
+  try {
+      // console.log(req.params);
+      const {id} = req.params;
+
+      const userindividual = await Models.findById({_id:id});
+      // console.log(userindividual);
+      res.status(201).json(userindividual);
+
+  } catch (error) {
+      res.status(422).json(error);
+  }
+};
+
+
+// Filter Models Data by Category
+
+export const FilterModels = async (req, res) => {
+  const { name, specialization } = req.query;
+  try {
+    let query = {};
+    if (name) {
+      query.name ={ $regex: new RegExp(name, 'i') };
+    }
+    if (specialization) {
+      query.specialization = { $regex: new RegExp(specialization, 'i') };;
+    }
+    const models = await Models.find(query);
+    res.json(models);
+  } catch (err) {
+    console.error('Error fetching models: ', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}

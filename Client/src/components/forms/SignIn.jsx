@@ -6,12 +6,14 @@ import Navbar from "../common/Navbar";
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
-  const user=useSelector(state=>state.authReducer.user)
-console.log("users data", user);
+ 
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate =  useNavigate();
+
+  const user =useSelector(state=>state.authReducer.user)
+  console.log("users data", user);
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Corrected typo here
@@ -20,9 +22,9 @@ console.log("users data", user);
   useEffect(() => {
     if (user && user.token) {
       // Check if the user object and token property exist
-      console.log("userToken",user.token);
       document.cookie = `token=${user.token}; expires=1h; path=/`;
-      const token = document.cookie;
+      const codedToken = document.cookie;
+      const token = codedToken.split("=")[1];
       console.log("token", token);
   
       if (token) {

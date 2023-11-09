@@ -20,7 +20,7 @@ function App() {
          <Route path='/signup' exact element={<SignUp/>} />
          <Route path='/signin' exact element={<SignIn/>} />
          <Route path='/contact_us' exact element={<Contactus/>} />
-         <Route path='/model_profile' exact element={<Modelsprofile/>} />
+         <Route path='/model_profile/:id' exact element={<Modelsprofile/>} />
       </Routes>
       
     

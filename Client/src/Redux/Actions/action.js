@@ -4,13 +4,19 @@ import axios from "axios";
 export const MODEL_SIGN_UP_SUCCESS = "MODEL_SIGN_UP_SUCCESS";
 export const FETCH_MODELS_REQUEST = "FETCH_MODELS_REQUEST";
 export const FETCH_MODELS_SUCCESS = "FETCH_MODELS_SUCCESS";
+export const FETCH_MODELS_PROFILE_REQUEST = "FETCH_MODELS_PROFILE_REQUEST";
+export const FETCH_MODELS_PROFILE_SUCCESS = "FETCH_MODELS_PROFILE_SUCCESS";
+export const FETCH_MODELS_PROFILE_FAILURE = "FETCH_MODELS_PROFILE_FAILURE";
+export const FETCH_MODELS_FAILURE = "FETCH_MODELS_FAILURE";
 export const LOGIN_MODEL_SUCCESS = "LOGIN_MODEL_SUCCESS";
 export const TOKEN_VERIFIED_SUCCESS = "TOKEN_VERIFIED_SUCCESS";
 export const TOKEN_VERIFIED_FAILURE = "TOKEN_VERIFIED_FAILURE";
 export const LOGIN_MODEL_ERROR = "LOGIN_MODEL_ERROR";
-export const FETCH_MODELS_FAILURE = "LOGIN_MODEL_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SUCCESS_FILTER_MODEL = "SUCCESS_FILTER_MODEL";
+export const FAILURE_FILTER_MODEL = "FAILURE_FILTER_MODEL";
+export const REQUEST_MODEL_FILTER = "REQUEST_MODEL_FILTER";
 
 export function Register(data) {
    const formData = new FormData();
@@ -26,8 +32,9 @@ export function Register(data) {
 
   return (dispatch) => {
   
+  
     // Send a POST request to your server
-    axios.post("/models/addModels", formData)
+    axios.post("http://localhost:8080/models/addModels", formData)
       .then((response) => {
         if (response.status === 201) {
           // Handle a successful response (status code 201)
@@ -56,7 +63,7 @@ export const fetchModels = () => {
   return (dispatch) => {
     dispatch({ type: FETCH_MODELS_REQUEST });
 
-    axios.get("/models/getModels") // Replace with your actual API endpoint
+    axios.get("http://localhost:8080/models/getModels") // Replace with your actual API endpoint
       .then((response) => {
         console.log("Fetched models data:", response.data); // Log data to the console
         dispatch({
@@ -79,7 +86,7 @@ export const fetchModels = () => {
 export const login = (userData) => async (dispatch) => {
   try {
   
-    const response = await axios.post('/models/loginModels', userData);
+    const response = await axios.post('http://localhost:8080/models/loginModels', userData);
     console.log('Login response:', response.data); // Log the response data
 
     if (response) {
@@ -105,7 +112,7 @@ export const login = (userData) => async (dispatch) => {
 export const verifyToken = (token) => async (dispatch) => {
   return new Promise(async (resolve) => {
     try {
-      const response = await fetch("/token-data", {
+      const response = await fetch("http://localhost:8080/token-data", {
         method: "GET",
         headers: {
           'authorization': `Bearer ${token}`, // Include the token in the request headers
@@ -131,4 +138,47 @@ export const verifyToken = (token) => async (dispatch) => {
       resolve({ error: "Failed to verify token" });
     }
   });
+};
+
+
+
+
+export const fetchModelsById = (id) => {
+  return (dispatch) => {
+    dispatch({ type: FETCH_MODELS_PROFILE_REQUEST });
+
+    axios.get(`http://localhost:8080/models/getModels/${id}`) // Replace with your actual API endpoint
+      .then((response) => {
+        console.log("Fetched models data:", response.data); // Log data to the console
+        dispatch({
+          type: FETCH_MODELS_PROFILE_SUCCESS,
+          payload: response.data,
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching models data:", error); // Log error to the console
+        dispatch({
+          type: FETCH_MODELS_PROFILE_FAILURE,
+          error: error.message,
+        });
+      });
+  };
+};
+
+// filter the models data
+
+
+export const fetchModelsFilter = (name, category) => async (dispatch) => {
+  dispatch({ type: REQUEST_MODEL_FILTER });
+
+  try {
+    const response = await axios.get(`http://localhost:8080/models/filterModels?name=${name}&specialization=${category}`);
+    dispatch({
+      type: SUCCESS_FILTER_MODEL,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.error('Error fetching models: ', error);
+    dispatch({ type: FAILURE_FILTER_MODEL });
+  }
 };

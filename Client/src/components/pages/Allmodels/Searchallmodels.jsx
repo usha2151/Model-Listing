@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { searchmodels } from "../../images";
 import Filtermodelsdata from "./Filtermodelsdata";
 import Navbar from "../../common/Navbar";
-
+import { fetchModelsFilter } from "../../../Redux/Actions/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const Searchallmodels = () => {
+  const dispatch = useDispatch();
+  const [searchName, setSearch] = useState('');
+  const [searchCategory, setSearchCat] = useState('');
+
+
+
+  const handleSearch  = () => {
+  dispatch(fetchModelsFilter(searchName, searchCategory));
+  }
+
   return (
     <>
       <div className="relative">
@@ -33,10 +44,10 @@ const Searchallmodels = () => {
                   What you'd like to find?
                 </label>
                 <br />
-                <input
+                <input onChange={(e) => {setSearch(e.target.value)}}
                   type="text"
                   placeholder="Keyword to Search.....?"
-                  class="w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[12px] pl-4"
+                  class="w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[12px] pl-4 text-black"
                 />
               </div>
               <div>
@@ -45,17 +56,17 @@ const Searchallmodels = () => {
                 </label>
                 <br />
                 <div class="relative">
-                  <input
+                  <input onChange={(e) => {setSearchCat(e.target.value)}}
                     type="text"
                     placeholder="All Categories ....."
-                    class="w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[12px] pl-4"
+                    class="w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[12px] pl-4 text-black"
                   />
                   <i class="fa-solid fa-caret-down text-[#6A6A6A] absolute right-4 top-4 lg:text-[30px] sm:text-[30px]"></i>
                 </div>
               </div>
             </div>
             <div class="flex justify-end items-end ml-auto mt-7">
-              <button class="bg-[purple] text-white py-4  sm:text-h6  lg:text-h5 px-10">
+              <button class="bg-[purple] text-white py-4  sm:text-h6  lg:text-h5 px-10" onClick={handleSearch}>
                 <i class="fa-solid fa-search pr-5 mt-2 sm:pr-5"></i>
                 SEARCH
               </button>
