@@ -5,6 +5,8 @@ import path from "path";
 import dotenv from 'dotenv';
 import Connection from "./database/connection.js";
 import Routes from './routes/modelRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import {login} from './controller/loginController.js';
 import { userFromToken } from "./utils/Token.js";
 
 
@@ -23,8 +25,11 @@ Connection();
 app.use(cors());
 app.use(express.json());
 app.use('/token-data',userFromToken)
+app.use('/login', login);
 
 app.use('/models', Routes);
+app.use('/users', userRoutes);
+
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);

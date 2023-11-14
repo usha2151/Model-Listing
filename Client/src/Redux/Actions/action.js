@@ -15,10 +15,11 @@ export const LOGIN_MODEL_ERROR = "LOGIN_MODEL_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 
-export function Register(data) {
-   const formData = new FormData();
 
-  // Assuming "data" contains form fields and files
+// ============================================= this for model all action============================= //
+export function RegisterModel(data) {
+
+  const formData = new FormData();
   formData.append('name', data.name);
   formData.append('email', data.email);
   formData.append('mobile', data.mobile);
@@ -35,9 +36,7 @@ export function Register(data) {
         if (response.status === 201) {
           // Handle a successful response (status code 201)
           alert("Data inserted successfully!");
-          // Dispatch the success action with the added form data
-           // Create a user object with the data
-          
+
           dispatch({
             type: SIGN_UP_SUCCESS,
             user: data,
@@ -78,31 +77,6 @@ export const fetchModels = () => {
 };
 
 
-// Action to log in a model
-export const login = (userData) => async (dispatch) => {
-  try {
-  
-    const response = await axios.post('http://localhost:8080/models/loginModels', userData);
-    console.log('Login response:', response.data); // Log the response data
-
-    if (response) {
-  if (response.status === 200 && response.data.token) {
-    console.log('Login successful. Token saved.');
-  } else {
-    console.log('Login failed:', response.status, response.data.error);
-  }
-} else {
-  console.log('Login request failed.');
-}
-
-
-    dispatch({ type: 'LOGIN_SUCCESS', user: response.data });
-  } catch (error) {
-    console.log('Login error:', error);
-    dispatch({ type: 'LOGIN_MODEL_ERROR', payload: error });
-  }
-};
-
 
 // Verifytoken to log in a user
 export const verifyToken = (token) => async (dispatch) => {
@@ -136,7 +110,7 @@ export const verifyToken = (token) => async (dispatch) => {
   });
 };
 
-
+// fetch individual model profile
 export const fetchModelsById = (id) => {
   return (dispatch) => {
     dispatch({ type: FETCH_MODELS_PROFILE_REQUEST });
@@ -157,4 +131,58 @@ export const fetchModelsById = (id) => {
         });
       });
   };
+};
+
+
+// ============================================= this for user all action============================= //
+export function RegisterUser(data) {
+
+ return (dispatch) => {
+ console.log(data);
+   // Send a POST request to your server
+   axios.post("http://localhost:8080/users/addUsers", data)
+     .then((response) => {
+       if (response.status === 201) {
+         // Handle a successful response (status code 201)
+         alert("Data inserted successfully!");
+
+         dispatch({
+           type: SIGN_UP_SUCCESS,
+           user: data,
+         });
+       } else {
+         // Handle other status codes as needed
+         alert("Server error: " + response.status);
+       }
+     })
+     .catch((error) => {
+       // Handle the case where the request fails
+       alert("Error: " + error.message);
+     });
+ };
+}
+
+//==================================== Action to login as model and user============================== //
+export const login = (userData) => async (dispatch) => {
+  try {
+  
+    const response = await axios.post('http://localhost:8080/login', userData);
+    console.log('Login response:', response.data); // Log the response data
+
+    if (response) {
+  if (response.status === 200 && response.data.token) {
+    console.log('Login successful. Token saved.');
+  } else {
+    console.log('Login failed:', response.status, response.data.error);
+  }
+} else {
+  console.log('Login request failed.');
+}
+
+
+    dispatch({ type: 'LOGIN_SUCCESS', user: response.data });
+  } catch (error) {
+    console.log('Login error:', error);
+    dispatch({ type: 'LOGIN_MODEL_ERROR', payload: error });
+  }
 };

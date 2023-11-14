@@ -7,8 +7,9 @@ import {
   Search,
   Meassage,
 } from "../../images";
+import { useNavigate } from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({props}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpansion = () => {
@@ -19,6 +20,12 @@ const Hero = () => {
     setIsExpanded(false);
   }
 
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    console.log(document.cookie);
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    navigate('/signin')
+  };
 
   return (
     <>
@@ -33,7 +40,7 @@ const Hero = () => {
          
       <div class="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-80 text-white"> 
         <div className="container mx-auto px-6 md:px-16">
-        <div className="flex justify-center">
+        <nav className="flex justify-center">
       <div
         onMouseLeave={leaveout}
         onMouseEnter={toggleExpansion}
@@ -59,28 +66,61 @@ const Hero = () => {
         </div>
         {isExpanded && (
           <div className="text-center py-3 ml-auto mr-6 flex gap-10">
+            
             <a href="/all_models" className="text-black">
               All Models
             </a>
             <a href="/about_us" className="text-black">
               About us
             </a>
-            <a href="/model_profile" className="text-black">
+            <a href="/contact_us" className="text-black">
               Contact us
             </a>
-            <a href="/model_profile" className="text-black">
-            About Us
-            </a>
-            <a href="/model_profile" className="text-black">
-            Login 
-            </a>
-            <a href="/model_profile" className="text-black">
-            Register 
-            </a>
+           
+            {
+  !props ? (
+    <>
+      <div className="flex">
+        <a href="/signin" className="text-black">
+          Login 
+        </a>
+        <a href="/signup" className="text-black">
+          /Register 
+        </a>
+      </div>
+    </>
+  ) : (
+    <div className="relative">
+      {/* Display image and name */}
+      <div className="flex items-center" onClick={toggleExpansion}>
+        <img src={`http://localhost:8080/public/upload/${props.image}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
+        <span className="text-white ml-2 cursor-pointer">{props.name}</span>
+      </div>
+
+      {/* Dropdown options for logged-in user */}
+      {isExpanded && (
+        <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow">
+          <button className="text-black" onClick={handleLogout}>
+            Logout
+          </button>
+          <a href="/dashboard" className="text-black">
+            Dashboard
+          </a>
+        </div>
+      )}
+    </div>
+  )
+}
+
+
+            
+             
+            
+            
           </div>
         )}
       </div>
-    </div>
+    </nav>
 
             <div class="text-h2 md:text-h1 lg:text-[80px] text-purple font-bold lg:mt-96 sm:mt-72">
               Find Perfect Models

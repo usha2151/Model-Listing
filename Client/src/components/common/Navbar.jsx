@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { worldmodelhuntlogo } from "../images";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import { verifyToken } from "../../Redux/Actions/action";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -11,6 +13,26 @@ const Navbar = () => {
     navigate('/signin')
   };
 
+
+  const dispatch = useDispatch();
+  const {user}=useSelector(state=>state.authReducer.user)
+
+  if(user){
+    
+  console.log('fjdksafjkdlf',user.email);
+  }
+  useEffect(() => {
+    const codedToken = document.cookie;
+    const token=codedToken.split('=')[1]
+  
+  console.log(token);
+    if (token) {
+      dispatch(verifyToken(token))
+    }
+    else{
+      navigate('/signin')
+    }
+  }, []);
   return (
     <>
      <nav className="container mx-auto lg:px-16 sm:px-0 bg-gray-900 text-dark py-2 w-3/4">
@@ -45,7 +67,16 @@ const Navbar = () => {
           About Us
         </Link>
       </li>
-      <li className="flex">
+
+
+
+
+
+
+      {
+  !user ? (
+    <>
+       <li className="flex">
         <span>
           <i class="fa-solid fa-lg fa-user text-purple text-h4"></i>&nbsp;
         </span>
@@ -58,11 +89,39 @@ const Navbar = () => {
         </Link>
        
       </li>
-      <li className="hover:text-purple hover:border-b-2 hover.border-purple">
-        <button onClick={handleLogout} className="font-semibold">
-          Logout
-        </button>
-      </li>
+    </>
+  ) : (
+    <div className="relative">
+      {/* Display image and name */}
+      <div className="flex items-center">
+        <img src={`http://localhost:8080/public/upload/${user.image}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
+        <span className="text-white ml-2 cursor-pointer">{user.name}</span>
+      </div>
+
+    
+        <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow">
+          <button className="text-black" onClick={handleLogout}>
+            Logout
+          </button>
+          <a href="/dashboard" className="text-black">
+            Dashboard
+          </a>
+        </div>
+     
+    </div>
+  )
+}
+
+
+
+
+
+
+
+
+
+
+     
     </ul>
 
     <div className="lg:hidden h-14 w-14 rounded-full right-3 bg-purple bg-opacity-50 p-1">

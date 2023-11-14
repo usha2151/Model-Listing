@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../Redux/Actions/action';
+import { login, loginUser } from '../../Redux/Actions/action';
 import { signup } from "../images";
 import Navbar from "../common/Navbar";
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,7 @@ const SignIn = () => {
   const handleLogin = async (e) => {
     e.preventDefault(); // Corrected typo here
     dispatch(login({ email, password }));
+   
   };
   useEffect(() => {
     if (user && user.token) {

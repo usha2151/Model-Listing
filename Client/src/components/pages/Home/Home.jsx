@@ -28,14 +28,14 @@ const Home = () => {
       dispatch(verifyToken(token))
     }
     else{
-      navigate('/signin')
+      navigate('/')
     }
   }, []);
 
   return (
     <>
     
-      <Hero/>
+      <Hero props={user} />
       <ModelingMade />
     
       <Heading title={"Discover Models by Expertise"}/>

@@ -3,7 +3,7 @@ import { signup } from "../images";
 import Navbar from "../common/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Register } from "../../Redux/Actions/action";
+import { RegisterModel, RegisterUser } from "../../Redux/Actions/action";
 
 const SignUp = () => {
 
@@ -11,6 +11,19 @@ const SignUp = () => {
   const [isUser, setIsUser] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleRegisterAsModel = () => {
+    setIsModel(true);
+    setIsUser(false);
+  };
+
+  const handleRegisterAsUser = () => {
+    setIsModel(false);
+    setIsUser(true);
+  };
+
+   //=============this for models==============
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,46 +35,49 @@ const SignUp = () => {
     confirm_password: "",
   });
 
-
   const setdata = (e) => {
     const { name, value, type } = e.target;
-    if (type === 'file') {
-      
-      setFormData({ ...formData, [name]: e.target.files[0] });
-     
-    } else {
-      
-   
+    if (type === 'file') {    
+      setFormData({ ...formData, [name]: e.target.files[0] });   
+    } else {  
       setFormData({ ...formData, [name]: value });
     }
   };
  
   
-  const navigate = useNavigate();
-
-  const handleRegisterAsLawyer = () => {
-    setIsModel(true);
-    setIsUser(false);
-  };
-
-  const handleRegisterAsUser = () => {
-    setIsModel(false);
-    setIsUser(true);
-  };
-
-  const handleFormSubmit = async (e) => {
+  const handleModelFormSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirm_password) {
       alert("Passwords do not match. Please re-enter.");
       return;
     }
-  
-    console.log(formData); // Log the user object to the console
-  
-    // Add additional password validation logic here if needed
-  
-    // Dispatch the action if the passwords match
-    dispatch(Register(formData));
+    dispatch(RegisterModel(formData));
+  };
+
+
+  //===================this for user==============
+  const [formUserData, setFormUserData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    mobile: "",
+    password: "",
+    confirm_password: "",
+  });
+
+  const setdatas = (e) => {
+    const { name, value } = e.target;
+    setFormUserData({ ...formUserData, [name]: value });
+    
+  };
+ 
+  const handleUserFormSubmit = async (e) => {
+    e.preventDefault();
+    if (formUserData.password !== formUserData.confirm_password) {
+      alert("Passwords do not match. Please re-enter.");
+      return;
+    }
+    dispatch(RegisterUser(formUserData));
   };
 
   return (
@@ -112,7 +128,7 @@ const SignUp = () => {
                       {isModel && (
                         <>
                           <div className="flex justify-center">
-                            <button className="bg-purple px-14 py-3 text-white rounded-l-3xl font-sora" onClick={handleRegisterAsLawyer}>Model</button>
+                            <button className="bg-purple px-14 py-3 text-white rounded-l-3xl font-sora" onClick={handleRegisterAsModel}>Model</button>
                             <button className="bg-gray  px-14 py-3 text-purple rounded-r-3xl font-sora" onClick={handleRegisterAsUser}> User</button>
                           </div>
 
@@ -244,7 +260,7 @@ const SignUp = () => {
                       {isUser && (
                         <>
                           <div className="flex justify-center">
-                            <button className="bg-gray px-14 py-3 text-purple rounded-l-3xl font-sora" onClick={handleRegisterAsLawyer}> Model </button>
+                            <button className="bg-gray px-14 py-3 text-purple rounded-l-3xl font-sora" onClick={handleRegisterAsModel}> Model </button>
                             <button className="bg-purple px-14 py-3 text-white rounded-r-3xl font-bold font-sora" onClick={handleRegisterAsUser}> User</button>
                           </div>
 
@@ -254,6 +270,9 @@ const SignUp = () => {
                               <div class="relative h-11 w-full min-w-[200px]">
                                 <input class="peer h-full w-full border-b-2 border-gray bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                   placeholder=" "
+                                  onChange={setdatas}
+                                  value={formUserData.fname}
+                                  name="fname"
                                 />
                                 <label class="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-black transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-purple after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25]  peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-purple peer-focus:after:scale-x-100 peer-focus:after:border-purple peer-disabled:text-transparent">
                                   First Name
@@ -263,6 +282,9 @@ const SignUp = () => {
                               <div class="relative h-11 w-full min-w-[200px]">
                                 <input class="peer h-full w-full border-b-2 border-gray bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                   placeholder=" "
+                                  onChange={setdatas}
+                                  value={formUserData.lname}
+                                  name="lname"
                                 />
                                 <label class="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-black transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-purple after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25]  peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-purple peer-focus:after:scale-x-100 peer-focus:after:border-purple peer-disabled:text-transparent">
                                   Last Name
@@ -272,6 +294,10 @@ const SignUp = () => {
                               <div class="relative h-11 w-full min-w-[200px]">
                                 <input class="peer h-full w-full border-b-2 border-gray bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                   placeholder=" "
+                                  onChange={setdatas}
+                                  value={formUserData.mobile}
+                                  name="mobile"
+                                  type="number"
                                 />
                                 <label class="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-black transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-purple after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25]  peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-purple peer-focus:after:scale-x-100 peer-focus:after:border-purple peer-disabled:text-transparent">
                                   Mobile
@@ -281,6 +307,10 @@ const SignUp = () => {
                               <div class="relative h-11 w-full min-w-[200px]">
                                 <input class="peer h-full w-full border-b-2 border-gray bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                   placeholder=" "
+                                  onChange={setdatas}
+                                  value={formUserData.email}
+                                  name="email"
+                                  type="email"
                                 />
                                 <label class="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-black transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-purple after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25]  peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-purple peer-focus:after:scale-x-100 peer-focus:after:border-purple peer-disabled:text-transparent">
                                   Email
@@ -290,6 +320,10 @@ const SignUp = () => {
                               <div class="relative h-11 w-full min-w-[200px]">
                                 <input class="peer h-full w-full border-b-2 border-gray bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                   placeholder=" "
+                                  onChange={setdatas}
+                                  value={formUserData.password}
+                                  name="password"
+                                  type="password"
                                 />
                                 <label class="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-black transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-purple after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25]  peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-purple peer-focus:after:scale-x-100 peer-focus:after:border-purple peer-disabled:text-transparent">
                                   Password
@@ -299,6 +333,10 @@ const SignUp = () => {
                               <div class="relative h-11 w-full min-w-[200px]">
                                 <input class="peer h-full w-full border-b-2 border-gray bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                   placeholder=" "
+                                  onChange={setdatas}
+                                  value={formUserData.confirm_password}
+                                  name="confirm_password"
+                                  type="password"
                                 />
                                 <label class="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-black transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-purple after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25]  peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-purple peer-focus:after:scale-x-100 peer-focus:after:border-purple peer-disabled:text-transparent">
                                   Confirm Password
@@ -311,7 +349,7 @@ const SignUp = () => {
                       )}
 
 
-                      <button  type="submit" onClick={handleFormSubmit} className="block w-full text-center bg-purple font-sora mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">
+                      <button  type="submit" onClick={isModel ? handleModelFormSubmit : handleUserFormSubmit} className="block w-full text-center bg-purple font-sora mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">
                         Signup
                       </button>
                       <div className="flex justify-between mt-4">

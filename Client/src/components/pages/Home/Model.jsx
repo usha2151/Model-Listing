@@ -32,7 +32,7 @@ const Model = () => {
       {user.length && user.map((data, index) => (
         <Link to={`/model_profile/${data._id}`}>
   <div class="relative" key={index}>
-    <img src={`/public/upload/${data.image}`} alt="model" class="w-full h-[460px]" />
+    <img src={`http://localhost:8080/public/upload/${data.image}`} alt="model" class="w-full h-[460px]" />
     <div class="absolute inset-0 bg-gradient-to-b from-white to-[#000] mix-blend-multiply"></div>
     <div class="absolute bottom-10 left-10 right-0  text-white py-4 px-2">
       <p class="text-h3 w-20  font-semibold leading-8">{data.name}</p>
