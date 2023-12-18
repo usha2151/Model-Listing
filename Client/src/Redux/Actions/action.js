@@ -17,7 +17,7 @@ export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 
 
 // ============================================= this for model all action============================= //
-export function RegisterModel(data) {
+export function RegisterModel(data) {console.log(data);
 
   const formData = new FormData();
   formData.append('name', data.name);
@@ -25,10 +25,21 @@ export function RegisterModel(data) {
   formData.append('mobile', data.mobile);
   formData.append('specialization', data.specialization);
   formData.append('experience', data.experience);
-  formData.append('file', data.file);
   formData.append('password', data.password);
 
-  return (dispatch) => {
+  // Append multiple files
+  if (data.file && data.file.length > 0) {
+    // Check if the number of files is less than or equal to 8
+    if (data.file.length <= 8) {
+      for (let i = 0; i < data.file.length; i++) {
+        formData.append('file', data.file[i]);
+      }
+    } else {
+      alert("Error: Only 8 or fewer images are allowed.");
+      return; // Stop further execution
+    }
+  }
+  return (dispatch) => { 
   
     // Send a POST request to your server
     axios.post("http://localhost:8080/models/addModels", formData)
@@ -48,7 +59,12 @@ export function RegisterModel(data) {
       })
       .catch((error) => {
         // Handle the case where the request fails
-        alert("Error: " + error.message);
+        if (error.response && error.response.status === 422) {
+          // Handle the case where the number of images is more than 8
+          alert("Error: Only 6 images are allowed.");
+        } else {
+          alert("Error: " + error.message);
+        }
       });
   };
 }

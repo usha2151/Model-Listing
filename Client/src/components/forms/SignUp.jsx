@@ -30,7 +30,7 @@ const SignUp = () => {
     mobile: "",
     specialization: "",
     experience: "",
-    file: null, // Add an image property to the user object
+    file: [], // Add an image property to the user object
     password: "",
     confirm_password: "",
   });
@@ -38,7 +38,7 @@ const SignUp = () => {
   const setdata = (e) => {
     const { name, value, type } = e.target;
     if (type === 'file') {    
-      setFormData({ ...formData, [name]: e.target.files[0] });   
+      setFormData({ ...formData, [name]: e.target.files});   
     } else {  
       setFormData({ ...formData, [name]: value });
     }
@@ -218,7 +218,7 @@ const SignUp = () => {
                               </div>
 
                               <div class="relative h-11 w-full min-w-[200px]">
-                                <input type="file" name="file" onChange={setdata} accept="image/*"  class="peer h-full w-full border-b-2 border-gray bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                <input type="file" name="file" onChange={setdata} accept="image/*" multiple class="peer h-full w-full border-b-2 border-gray bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                   placeholder=" "
                                 />
                              <label class="after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-black transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-purple after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25]  peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-purple peer-focus:after:scale-x-100 peer-focus:after:border-purple peer-disabled:text-transparent">

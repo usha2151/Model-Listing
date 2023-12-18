@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   modelimage1,
   modelimage2,
@@ -10,7 +11,15 @@ import {
   modelimage8,
 } from "../../images";
 
-const Modelprofilegallery = () => {
+const Modelprofilegallery = ({props,imageprops}) => {
+
+  console.log("usha ksjhdks ksdfjhds", imageprops);
+
+  // Check if imageprops is defined and has at least one element
+  if (!imageprops || imageprops.length === 0) {
+    // Handle the case where imageprops is not valid
+    return <div>Error: Invalid imageprops</div>;
+  }
   return (
     <>
       <div className="bg-black">
@@ -21,7 +30,8 @@ const Modelprofilegallery = () => {
               <div
                 className="h-[400px] bg-black bg-cover bg-center border-transparent border-8 hover:border-purple transition duration-1000"
                 style={{
-                  backgroundImage: `url(${modelimage1})`,
+                  backgroundImage: `url(http://localhost:8080/public/upload/${imageprops[1]})`,
+
                 }}
               ></div>
               <div

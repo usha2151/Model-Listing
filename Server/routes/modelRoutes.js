@@ -4,7 +4,7 @@ import { addModels, getModels, upload,getModelsByid} from '../controller/modelCo
 
 const router = express.Router();
 
-router.post('/addModels', upload.single('file'), addModels)
+router.post('/addModels', upload.array('file',9), addModels)
       .get('/getModels', getModels)
       .get('/getModels/:id', getModelsByid);
       // .get('/verifyModels', verifyToken ,verifyModels);

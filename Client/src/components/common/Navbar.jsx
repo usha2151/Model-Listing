@@ -27,10 +27,10 @@ const Navbar = () => {
   
   console.log(token);
     if (token) {
-      dispatch(verifyToken(token))
+      // dispatch(verifyToken(token))
     }
     else{
-      navigate('/signin')
+      // navigate('/signin')
     }
   }, []);
   return (

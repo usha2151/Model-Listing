@@ -7,11 +7,9 @@ import path from 'path';
 
 
 
-// Import your Models schema or model definition here
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/upload'); // Destination folder for uploaded files
+    cb(null, './public/upload');
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -19,44 +17,57 @@ const storage = multer.diskStorage({
   }
 });
 
-export  const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  // Allow only image files with specific mime types (adjust as needed)
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    cb(null, true); // Accept the file
+  } else {
+    cb(new Error('Invalid file type. Only JPEG, PNG, and GIF are allowed.'), false);
+  }
+};
 
+export const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+});
 // Register a model
 export const addModels = async (req, res) => {
-  console.log(req.body);
-  const { name, email, experience, mobile, specialization, password } = req.body; // Destructure these values from req.body
-   // Hash the user's password before saving it
-   const saltRounds = 10; // You can adjust the number of salt rounds
-   const hashedPassword = await bcrypt.hash(password, saltRounds);
-console.log(hashedPassword);
+  const { name, email, experience, mobile, specialization, password } = req.body;
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
   try {
     if (!name || !email || !experience || !mobile || !specialization || !password) {
       return res.status(422).json({ error: "Please fill in all required fields." });
     }
 
-    // You should have your Models schema/model defined and imported here
-    // Example: const newModel = new Models({
+    const images = req.files.map(file => file.filename);
+
+    // Check if the number of images is more than 8
+    if (images.length > 8) {
+      return res.status(422).json({ error: "Only 8 images are allowed." });
+    }
+
     const newModel = new Models({
       name,
       email,
       mobile,
       experience,
       specialization,
-      image: req.file ? req.file.filename : null, // File path or null if no file uploaded
-      password: hashedPassword, // Hashed password
+      images,
+      password: hashedPassword,
     });
 
     await newModel.save();
+    console.log(newModel);
 
     return res.status(201).json(newModel);
   } catch (error) {
     return res.status(500).json({ error: "An error occurred while processing your request." });
   }
 };
-
-
-
 // Fetch all models
 export const getModels = async (req, res) => {
   try {

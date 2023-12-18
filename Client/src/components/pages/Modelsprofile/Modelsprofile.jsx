@@ -15,10 +15,12 @@ const Modelsprofile = () => {
   useEffect(() => {
     dispatch(fetchModelsById(prams.id));
    }, []);
+   
+   console.log(user.images);
   return (
     <>
     <Modelhero />
-    <Modelprofilegallery />
+    <Modelprofilegallery imageprops={user.images}/>
     <Modalprofileexpertise props={user}/>
     <Topmodels />
     </>

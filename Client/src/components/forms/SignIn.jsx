@@ -21,17 +21,17 @@ const SignIn = () => {
    
   };
   useEffect(() => {
-    if (user && user.token) {
-      // Check if the user object and token property exist
-      document.cookie = `token=${user.token}; expires=1h; path=/`;
-      const codedToken = document.cookie;
-      const token = codedToken.split("=")[1];
-      console.log("token", token);
+    // if (user && user.token) {
+    //   // Check if the user object and token property exist
+    //   document.cookie = `token=${user.token}; expires=1h; path=/`;
+    //   const codedToken = document.cookie;
+    //   const token = codedToken.split("=")[1];
+    //   console.log("token", token);
   
-      if (token) {
-        navigate("/");
-      }
-    }
+    //   if (token) {
+    //     navigate("/");
+    //   }
+    // }
   }, [user]);
 
   return (
