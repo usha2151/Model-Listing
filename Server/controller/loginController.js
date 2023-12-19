@@ -46,7 +46,7 @@ export const login = async (req, res) => {
             _id: user._id,
             email: user.email,
             name: user.name,
-            image:user.image, // Assuming user.image is the image URL
+            images:user.images, // Assuming user.image is the image URL
         };
 
         // Send the token and user data in the response

@@ -93,7 +93,7 @@ const Hero = ({props}) => {
     <div className="relative">
       {/* Display image and name */}
       <div className="flex items-center" onClick={toggleExpansion}>
-        <img src={`http://localhost:8080/public/upload/${props.image}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
+        <img src={`http://localhost:8080/public/upload/${props.images[0]}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
         <span className="text-white ml-2 cursor-pointer">{props.name}</span>
       </div>
 

@@ -46,7 +46,7 @@ const SignUp = () => {
  
   
   const handleModelFormSubmit = async (e) => {
-    e.preventDefault();
+    
     if (formData.password !== formData.confirm_password) {
       alert("Passwords do not match. Please re-enter.");
       return;

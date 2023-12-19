@@ -133,7 +133,7 @@ export const fetchModelsById = (id) => {
 
     axios.get(`http://localhost:8080/models/getModels/${id}`) // Replace with your actual API endpoint
       .then((response) => {
-        console.log("Fetched models data:", response.data); // Log data to the console
+        
         dispatch({
           type: FETCH_MODELS_PROFILE_SUCCESS,
           payload: response.data,

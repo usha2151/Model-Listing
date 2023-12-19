@@ -19,20 +19,21 @@ const Navbar = () => {
 
   if(user){
     
-  console.log('fjdksafjkdlf',user.email);
+  
   }
   useEffect(() => {
     const codedToken = document.cookie;
     const token=codedToken.split('=')[1]
   
-  console.log(token);
+
     if (token) {
-      // dispatch(verifyToken(token))
+      dispatch(verifyToken(token))
     }
     else{
-      // navigate('/signin')
+      navigate('/signin')
     }
   }, []);
+ 
   return (
     <>
      <nav className="container mx-auto lg:px-16 sm:px-0 bg-gray-900 text-dark py-2 w-3/4">
@@ -94,8 +95,11 @@ const Navbar = () => {
     <div className="relative">
       {/* Display image and name */}
       <div className="flex items-center">
-        <img src={`http://localhost:8080/public/upload/${user.image}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
-        <span className="text-white ml-2 cursor-pointer">{user.name}</span>
+        {
+          user.images &&
+        <img src={`http://localhost:8080/public/upload/${user.images[0]}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
+        }
+        <span className="text-white ml-2 cursor-pointer">hfdgh{user.name}</span>
       </div>
 
     

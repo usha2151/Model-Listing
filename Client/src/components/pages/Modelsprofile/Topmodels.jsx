@@ -2,7 +2,7 @@ import React from 'react'
 import { left_arrow, right_arrow } from "../../images";
 import Model from '../Home/Model';
 
-const Topmodels = () => {
+const Topmodels = ({setSingleModel}) => {
   return (
     <>
     <div className='container mx-auto'>
@@ -30,7 +30,7 @@ const Topmodels = () => {
           </div>
      </div>  
     </div>
-      <Model />
+      <Model setSingleModel={setSingleModel}/>
       </>
   )
 }

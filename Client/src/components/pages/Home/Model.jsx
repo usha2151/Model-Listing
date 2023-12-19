@@ -10,14 +10,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchModels } from "../../../Redux/Actions/action";
 import { Link } from "react-router-dom";
 
-const Model = () => {
+const Model = ({setSingleModel}) => {
   const dispatch = useDispatch();
   const user = useSelector(state=>state.fetchModelsReducer.models);
 
   useEffect(() => {
    dispatch(fetchModels());
   }, []);
- 
+
+  const hanldeModelData=(id)=>{
+    console.log(id);
+    const filterModelData=user.filter(item=>item._id===id)
+    console.log('filterModelData',filterModelData);
+    setSingleModel(filterModelData)
+  }
+
   return (
     <>
       <div className="flex justify-end mr-40 mt-8 font-sora">
@@ -32,15 +39,15 @@ const Model = () => {
       {user.length && user.map((data, index) => (
         <Link to={`/model_profile/${data._id}`}>
   <div class="relative" key={index}>
-    <img src={`http://localhost:8080/public/upload/${data.image}`} alt="model" class="w-full h-[460px]" />
+    <img src={`http://localhost:8080/public/upload/${data.images[0]}`} alt="model" class="w-full h-[460px]" />
     <div class="absolute inset-0 bg-gradient-to-b from-white to-[#000] mix-blend-multiply"></div>
     <div class="absolute bottom-10 left-10 right-0  text-white py-4 px-2">
       <p class="text-h3 w-20  font-semibold leading-8">{data.name}</p>
-      <button class="text-white bg-gradient-to-b from-[#941196] to-black px-5 py-2 text-p mt-5 rounded-full">
+      <button  class="text-white bg-gradient-to-b from-[#941196] to-black px-5 py-2 text-p mt-5 rounded-full">
         {data.specialization}
       </button>
-      <div class="text-white w-12 h-12 border-2 mt-14 rounded-full flex justify-center items-center ml-auto ">
-        <i class="fa-solid fa fa-angle-right text-[20px]"></i>
+      <div onClick={()=>hanldeModelData(data._id)} class="text-white w-12 h-12 border-2 mt-14 rounded-full flex justify-center items-center ml-auto ">
+        <i  class="fa-solid fa fa-angle-right text-[20px]"></i>
       </div>
     </div>
   </div>

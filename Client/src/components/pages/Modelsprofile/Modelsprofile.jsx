@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modalprofileexpertise from "./Modalprofileexpertise";
 import Modelprofilegallery from './Modelprofilegallery';
 import Modelhero from './Modelhero';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchModelsById } from '../../../Redux/Actions/action';
 
 const Modelsprofile = () => {
+  const [singleModel,setSingleModel]=useState(null)
 
   const prams = useParams();
   const dispatch = useDispatch();
@@ -16,13 +17,13 @@ const Modelsprofile = () => {
     dispatch(fetchModelsById(prams.id));
    }, []);
    
-   console.log(user.images);
+   
   return (
     <>
     <Modelhero />
-    <Modelprofilegallery imageprops={user.images}/>
+    <Modelprofilegallery imageprops={singleModel ? singleModel[0].images : user.images}/>
     <Modalprofileexpertise props={user}/>
-    <Topmodels />
+    <Topmodels setSingleModel={setSingleModel} />
     </>
   )
 }
