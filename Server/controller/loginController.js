@@ -8,6 +8,7 @@ dotenv.config();
 
 
 // Login model
+// Login model
 export const login = async (req, res) => {
     const { email, password } = req.body;
 
@@ -19,7 +20,7 @@ export const login = async (req, res) => {
         // Ensure that at least one of the models has found a user
         if (!model && !users) {
             console.log("Invalid email or password: Email not found");
-            return res.status(401).json({ error: "Invalid email or password." });
+            return res.status(401).json({ success: false, error: "Invalid email or password." });
         }
 
         // Use the correct user based on the model that found a user
@@ -30,7 +31,7 @@ export const login = async (req, res) => {
 
         if (!passwordMatch) {
             console.log("Invalid email or password: Password mismatch");
-            return res.status(401).json({ error: "Invalid email or password." });
+            return res.status(401).json({ success: false, error: "Invalid email or password." });
         }
 
         // If the password is correct, generate a JWT token
@@ -46,16 +47,17 @@ export const login = async (req, res) => {
             _id: user._id,
             email: user.email,
             name: user.name,
-            images:user.images, // Assuming user.image is the image URL
+            images: user.images, // Assuming user.image is the image URL
         };
 
-        // Send the token and user data in the response
-        res.status(200).json({ token, user: userData });
+        // Send the token, user data, and success status in the response
+        res.status(200).json({ success: true, token, user: userData });
 
     } catch (error) {
         console.log("An error occurred while logging in:", error);
-        res.status(500).json({ error: "An error occurred while logging in." });
+        res.status(500).json({ success: false, error: "An error occurred while logging in." });
     }
 };
+
 
   

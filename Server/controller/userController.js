@@ -32,7 +32,15 @@ export const addUsers = async (req, res) => {
 
         await newUser.save();
 
-        return res.status(201).json(newUser);
+        return res.status(201).json({
+            message: "User registered successfully",
+            user: {
+                id: newUser._id,
+                name: newUser.name,
+                email: newUser.email, // Include the email in the response
+                mobile: newUser.mobile,
+            }
+        });
     } catch (error) {
         return res.status(500).json({ error: "An error occurred while processing your request." });
     }

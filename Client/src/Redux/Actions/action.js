@@ -164,7 +164,7 @@ export const fetchModelsById = (id) => {
 export function RegisterUser(data) {
 
  return (dispatch) => {
- console.log(data);
+ 
    // Send a POST request to your server
    axios.post("http://localhost:8080/users/addUsers", data)
      .then((response) => {

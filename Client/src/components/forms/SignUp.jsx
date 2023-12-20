@@ -342,6 +342,7 @@ const SignUp = () => {
                                   Confirm Password
                                 </label>
                               </div>
+                             
 
                             </div>
                           </form>
