@@ -30,7 +30,7 @@ const Navbar = () => {
       dispatch(verifyToken(token))
     }
     else{
-      navigate('/signin')
+      // navigate('/signin')
     }
   }, []);
  

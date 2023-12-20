@@ -3,16 +3,19 @@ import {
     FETCH_MODELS_REQUEST,
     FETCH_MODELS_SUCCESS,
     FETCH_MODELS_FAILURE,
+    MODEL_BY_ID,
   } from "../Actions/action";
   
   
   const initialState = {
     models: [],
+    singleModel:null,
     loading: false,
     error: null,
   };
   
   const fetchModelsReducer = (state = initialState, action) => {
+    console.log('action',action);
     switch (action.type) {
       case FETCH_MODELS_REQUEST:
         return {
@@ -34,6 +37,12 @@ import {
           loading: false,
           error: action.error,
         };
+      case MODEL_BY_ID:
+        return {
+          ...state,
+          singleModel:action.payload,
+          loading: false,
+        }
       default:
         return state;
     }

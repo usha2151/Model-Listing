@@ -14,6 +14,7 @@ export const TOKEN_VERIFIED_FAILURE = "TOKEN_VERIFIED_FAILURE";
 export const LOGIN_MODEL_ERROR = "LOGIN_MODEL_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const MODEL_BY_ID="MODEL_BY_ID"
 
 
 // ============================================= this for model all action============================= //
@@ -125,6 +126,15 @@ export const verifyToken = (token) => async (dispatch) => {
     }
   });
 };
+
+// fetch individual model profile
+export const filterModelsById = (data) => {
+  return (dispatch) => {
+    dispatch({ type: MODEL_BY_ID,
+      payload: data[0], })
+  };
+};
+
 
 // fetch individual model profile
 export const fetchModelsById = (id) => {

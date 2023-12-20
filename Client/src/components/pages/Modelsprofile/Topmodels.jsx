@@ -1,8 +1,12 @@
 import React from 'react'
 import { left_arrow, right_arrow } from "../../images";
 import Model from '../Home/Model';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-const Topmodels = ({setSingleModel}) => {
+const Topmodels = () => {
+
+ 
   return (
     <>
     <div className='container mx-auto'>
@@ -30,7 +34,7 @@ const Topmodels = ({setSingleModel}) => {
           </div>
      </div>  
     </div>
-      <Model setSingleModel={setSingleModel}/>
+      <Model/>
       </>
   )
 }

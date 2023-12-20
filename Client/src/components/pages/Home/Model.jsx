@@ -7,10 +7,11 @@ import {
   Modelfour,
 } from "../../images";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchModels } from "../../../Redux/Actions/action";
+import { fetchModels, filterModelsById } from "../../../Redux/Actions/action";
 import { Link } from "react-router-dom";
 
-const Model = ({setSingleModel}) => {
+const Model = () => {
+  
   const dispatch = useDispatch();
   const user = useSelector(state=>state.fetchModelsReducer.models);
 
@@ -21,8 +22,9 @@ const Model = ({setSingleModel}) => {
   const hanldeModelData=(id)=>{
     console.log(id);
     const filterModelData=user.filter(item=>item._id===id)
-    console.log('filterModelData',filterModelData);
-    setSingleModel(filterModelData)
+    if(filterModelData){
+      dispatch(filterModelsById(filterModelData))
+    }
   }
 
   return (
