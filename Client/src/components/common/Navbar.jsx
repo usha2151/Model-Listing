@@ -16,10 +16,13 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const {user}=useSelector(state=>state.authReducer.user)
-
+  
+ 
+  // console.log(user.isModel);
+  
   if(user){
     
-  
+ 
   }
   useEffect(() => {
     const codedToken = document.cookie;
@@ -96,10 +99,10 @@ const Navbar = () => {
       {/* Display image and name */}
       <div className="flex items-center">
         {
-          user.images &&
+          user.images && user.isModel &&
         <img src={`http://localhost:8080/public/upload/${user.images[0]}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
         }
-        <span className="text-white ml-2 cursor-pointer">hfdgh{user.name}</span>
+        <span className="text-white ml-2 cursor-pointer">{user.name}</span>
       </div>
 
     
@@ -107,25 +110,17 @@ const Navbar = () => {
           <button className="text-black" onClick={handleLogout}>
             Logout
           </button>
-          <a href="/dashboard" className="text-black">
-            Dashboard
-          </a>
+          {user.images && user.isModel && (
+      <a href="/dashboard" className="text-black">
+        Dashboard
+      </a>
+    )}
         </div>
      
     </div>
   )
 }
-
-
-
-
-
-
-
-
-
-
-     
+ 
     </ul>
 
     <div className="lg:hidden h-14 w-14 rounded-full right-3 bg-purple bg-opacity-50 p-1">

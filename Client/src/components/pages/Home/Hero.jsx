@@ -93,7 +93,10 @@ const Hero = ({props}) => {
     <div className="relative">
       {/* Display image and name */}
       <div className="flex items-center" onClick={toggleExpansion}>
+        {
+          props.images &&
         <img src={`http://localhost:8080/public/upload/${props.images[0]}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
+        }
         <span className="text-white ml-2 cursor-pointer">{props.name}</span>
       </div>
 
@@ -103,11 +106,14 @@ const Hero = ({props}) => {
           <button className="text-black" onClick={handleLogout}>
             Logout
           </button>
-          <a href="/dashboard" className="text-black">
-            Dashboard
-          </a>
-        </div>
-      )}
+          {
+          props.images &&
+                    <a href="/dashboard" className="text-black">
+                      Dashboard
+                    </a>
+}
+                </div>
+              )}
     </div>
   )
 }
@@ -137,7 +143,7 @@ const Hero = ({props}) => {
                 <input
                   type="text"
                   placeholder="Keyword to Search.....?"
-                  class="w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[20px] md:text-[15px] pl-4"
+                  class="w-full py-3  mt-2 border-2 border-[#D9D9D9] text-black  lg:text-[15px] sm:text-[20px] md:text-[15px] pl-4"
                 />
               </div>
               <div>
@@ -149,9 +155,9 @@ const Hero = ({props}) => {
                   <input
                     type="text"
                     placeholder="All Categories ....."
-                    class="w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[20px] md:text-[15px] pl-4"
+                    class="w-full py-3  mt-2 border-2 border-[#D9D9D9] text-black  lg:text-[15px] sm:text-[20px] md:text-[15px] pl-4"
                   />
-                  <i class="fa-solid fa-caret-down text-[#6A6A6A] absolute right-4 top-4 lg:text-[30px] sm:text-[40px]"></i>
+                  <i class="fa-solid fa-caret-down text-black absolute right-4 top-4 lg:text-[30px] sm:text-[40px]"></i>
                 </div>
               </div>
             </div>

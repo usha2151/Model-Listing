@@ -34,6 +34,9 @@ export const login = async (req, res) => {
             return res.status(401).json({ success: false, error: "Invalid email or password." });
         }
 
+        // If the user belongs to the Models schema, return false; otherwise, return true
+        const isModel = !!model;
+        
         // If the password is correct, generate a JWT token
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
         console.log("Login successful. Token generated:", token);
@@ -48,6 +51,7 @@ export const login = async (req, res) => {
             email: user.email,
             name: user.name,
             images: user.images, // Assuming user.image is the image URL
+            isModel,
         };
 
         // Send the token, user data, and success status in the response

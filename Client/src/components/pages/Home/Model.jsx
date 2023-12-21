@@ -20,7 +20,7 @@ const Model = () => {
   }, []);
 
   const hanldeModelData=(id)=>{
-    console.log(id);
+
     const filterModelData=user.filter(item=>item._id===id)
     if(filterModelData){
       dispatch(filterModelsById(filterModelData))

@@ -13,7 +13,7 @@ const SignIn = () => {
   const navigate =  useNavigate();
 
   const user =useSelector(state=>state.authReducer.user)
-  console.log("users data", user);
+
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Corrected typo here
