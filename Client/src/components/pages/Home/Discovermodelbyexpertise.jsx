@@ -60,4 +60,4 @@ const Discovermodelbyexpertise = () => {
   );
 };
 
-export default Discovermodelbyexpertise;
+export default Discovermodelbyexpertise ;
