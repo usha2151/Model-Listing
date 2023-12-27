@@ -4,6 +4,7 @@ import {
     FETCH_MODELS_SUCCESS,
     FETCH_MODELS_FAILURE,
     MODEL_BY_ID,
+   
   } from "../Actions/action";
   
   
@@ -43,6 +44,7 @@ import {
           singleModel:action.payload,
           loading: false,
         }
+       
       default:
         return state;
     }

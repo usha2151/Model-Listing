@@ -1,8 +1,27 @@
 import React from "react";
 import { footerlogo } from "../images";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 const Footer = () => {
+  const handleSubscription = async (e) => {
+    e.preventDefault();
+
+    const emailInput = document.getElementById('emailInput');
+    const email = emailInput.value;
+
+    // Perform additional client-side validation if needed
+
+    // Send subscription request to the server using Axios
+    try {
+      const response = await axios.post('http://localhost:8080/models/sentmail', {
+        email: email,
+      });
+
+      console.log(response.data); // Handle server response as needed
+    } catch (error) {
+      console.error('Error sending subscription request:', error);
+    }
+  };
   return (
     <>
       <div className="bg-black container-fluid mx-auto font-sora py-5">
@@ -91,11 +110,12 @@ const Footer = () => {
               <div className="mt-4 md:mt-0 py-9 relative">
                 <input
                   type="text"
+                  id="emailInput"
                   placeholder="Enter your email"
-                  className=" bg-gray-700 text-white border border-gray-600 py-4 px-4 pr-10 focus:outline-none focus:border-pink-500  md:w-auto"
+                  className=" bg-gray-700 text-black border border-gray-600 py-4 px-4 pr-10 focus:outline-none focus:border-pink-500  md:w-auto"
                 />
                 <span className="text-purple-500 absolute right-3 top-14">
-                  <i
+                  <i onClick={handleSubscription}
                     className="fa fa-bell fa-xl text-purple"
                     aria-hidden="true"
                   ></i>

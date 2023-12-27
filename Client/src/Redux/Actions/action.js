@@ -14,7 +14,7 @@ export const TOKEN_VERIFIED_FAILURE = "TOKEN_VERIFIED_FAILURE";
 export const LOGIN_MODEL_ERROR = "LOGIN_MODEL_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
-export const MODEL_BY_ID="MODEL_BY_ID"
+export const MODEL_BY_ID="MODEL_BY_ID";
 
 
 // ============================================= this for model all action============================= //

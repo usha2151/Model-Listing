@@ -26,7 +26,7 @@ const Discovermodelbyexpertise = () => {
               index % 3 === 0
                 ? 'h-[400px]'
                 : index % 3 === 1
-                ? 'h-[550px]'
+                ? 'h-[600px]'
                 : 'h-[500px]'; // Adjust the condition based on your requirements
 
             return (

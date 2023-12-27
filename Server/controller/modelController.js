@@ -4,6 +4,7 @@ dotenv.config();
 import bcrypt from "bcryptjs";
 import multer from 'multer';
 import path from 'path';
+import nodemailer from 'nodemailer';
 
 
 
@@ -95,3 +96,47 @@ export const getModelsByid = async (req, res) => {
       res.status(422).json(error);
   }
 };
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  auth: {
+    user: "aftabalam9008@gmail.com",
+    pass: "emkb wrou ijrt uwhi",
+  },
+});
+
+export async function sentMail(req, res) {
+  const { email } = req.body;
+
+  try {
+    // Send email to subscriber
+    const subscriberInfo = await transporter.sendMail({
+      from: '"model listing 👻" <aftabalam9008@gmail.com>',
+      to: email,
+      subject: 'Subscription Confirmation',
+      text: 'Hello world?',
+      html: 'Thank you for subscribing!',
+    });
+
+    // Send email to admin
+    const adminEmail = 'aftabalam9008@gmail.com'; // Replace with your admins email
+    const adminInfo = await transporter.sendMail({
+      from: '"model listing 👻" <aftabalam9008@gmail.com>',
+      to: adminEmail,
+      subject: 'New Subscription',
+      text: `A new subscriber with email ${email} has subscribed.`,
+      html: `A new subscriber with email ${email} has subscribed.`,
+    });
+
+    console.log("Subscriber Message sent: %s", subscriberInfo.messageId);
+    console.log("Admin Message sent: %s", adminInfo.messageId);
+
+    // Respond to the client
+    res.json({ status: 'success' });
+  } catch (error) {
+    console.error('Error sending emails:', error);
+    res.status(500).json({ status: 'error', error: 'Internal Server Error' });
+  }
+}
