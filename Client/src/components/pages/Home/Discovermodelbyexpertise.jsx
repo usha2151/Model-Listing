@@ -34,9 +34,9 @@ const Discovermodelbyexpertise = () => {
                 <img
                   src={`http://localhost:8080/public/upload/${item.images[0]}`}
                   alt={`girl_${index + 1}`}
-                  className={`rounded-fluid bg-cover object-cover ${imageSizeClass}`}
+                  className={`rounded-fluid  bg-cover object-cover ${imageSizeClass}`}
                 />
-                <div className='absolute inset-0 bg-black bg-opacity-80 flex justify-center items-center text-white'>
+                <div className='absolute inset-0  bg-opacity-80 flex justify-center items-center text-white'>
                   <p className='2xl:text-xl lg:text-h5 font-Graphik'>
                     {item.specialization}
                     <img

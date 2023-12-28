@@ -6,20 +6,25 @@ const Footer = () => {
   const handleSubscription = async (e) => {
     e.preventDefault();
 
-    const emailInput = document.getElementById('emailInput');
+    const emailInput = document.getElementById("emailInput");
     const email = emailInput.value;
 
-    // Perform additional client-side validation if needed
+    // Perform client-side validation
+    if (!email.trim()) {
+      // Check if the email is empty or contains only whitespaces
+      alert("Please fill in your email address.");
+      return;
+    }
 
     // Send subscription request to the server using Axios
     try {
-      const response = await axios.post('http://localhost:8080/models/sentmail', {
+      const response = await axios.post("http://localhost:8080/models/sentmail", {
         email: email,
       });
 
       console.log(response.data); // Handle server response as needed
     } catch (error) {
-      console.error('Error sending subscription request:', error);
+      console.error("Error sending subscription request:", error);
     }
   };
   return (

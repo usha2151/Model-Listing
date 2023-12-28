@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { searchmodels } from "../../images";
 import Filtermodelsdata from "./Filtermodelsdata";
 import Navbar from "../../common/Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchModels } from "../../../Redux/Actions/action";
 
 
 const Searchallmodels = () => {
+  const user = useSelector(state => state.fetchModelsReducer.models);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchModels());
+  }, [user]);
+
   return (
     <>
       <div className="relative">
@@ -63,9 +73,10 @@ const Searchallmodels = () => {
           </div>
         </div>
       </div>
-
-<Filtermodelsdata />
-
+{
+  user.length && 
+<Filtermodelsdata user={user}/>
+}
     </>
   );
 };
