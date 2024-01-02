@@ -10,7 +10,7 @@ const Searchallmodels = () => {
   const user = useSelector(state => state.fetchModelsReducer.models);
 
   const dispatch = useDispatch();
-
+console.log(user);
   useEffect(() => {
     dispatch(fetchModels());
   }, [user]);
@@ -46,7 +46,7 @@ const Searchallmodels = () => {
                 <input
                   type="text"
                   placeholder="Keyword to Search.....?"
-                  class="w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[12px] pl-4"
+                  class=" text-black w-full py-3  mt-2 border-2  border-[#D9D9D9] lg:text-[15px] sm:text-[12px] pl-4"
                 />
               </div>
               <div>
@@ -58,7 +58,7 @@ const Searchallmodels = () => {
                   <input
                     type="text"
                     placeholder="All Categories ....."
-                    class="w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[12px] pl-4"
+                    class="text-black  w-full py-3  mt-2 border-2 border-[#D9D9D9] lg:text-[15px] sm:text-[12px] pl-4"
                   />
                   <i class="fa-solid fa-caret-down text-[#6A6A6A] absolute right-4 top-4 lg:text-[30px] sm:text-[30px]"></i>
                 </div>
