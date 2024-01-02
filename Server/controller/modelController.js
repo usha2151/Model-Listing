@@ -35,6 +35,7 @@ export const upload = multer({
 });
 // Register a model
 export const addModels = async (req, res) => {
+  console.log(req.body);
   const { name, email, experience, mobile, specialization, password } = req.body;
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
