@@ -5,13 +5,14 @@ const initialState = {
 };
 
 const authReducer = (state = initialState, action) => {
-    console.log(action);
+ 
   switch (action.type) {
     case SIGN_UP_SUCCESS:
       return {
         ...state,
         user: action.user, // Use action.payload instead of action.model
       };
+  
       case LOGIN_SUCCESS:
               return {
                 ...state,

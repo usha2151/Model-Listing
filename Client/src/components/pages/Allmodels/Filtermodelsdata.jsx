@@ -1,29 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import ModelingMade from "../Home/ModelingMade";
 import { useDispatch, useSelector } from "react-redux";
 import { filterModelsById } from "../../../Redux/Actions/action";
 import { Link } from "react-router-dom";
-const Filtermodelsdata = () => {
+
+const Filtermodelsdata = ({ searchKeyword, selectedCategory, setSelectedCategory }) => {
   const user = useSelector((state) => state.fetchModelsReducer.models);
-  const [selectedSpecialization, setSelectedSpecialization] = useState("All");  
   const dispatch = useDispatch();
 
+  console.log(searchKeyword);
+
   const handleModelData = (id) => {
-    const filterModelData = user.filter(item => item._id === id);
-    if (filterModelData.length > 0) { // Check if there's any matching data
-      dispatch(filterModelsById(filterModelData[0])); // Pass the first matching item
+    const filterModelData = user.filter((item) => item._id === id);
+    if (filterModelData.length > 0) {
+      dispatch(filterModelsById(filterModelData[0]));
     }
-    
-  }
+  };
 
-  // Filter users based on selected specialization
-  const filteredUsers =
-    selectedSpecialization === "All"
-      ? user
-      : user.filter((userData) => userData.specialization === selectedSpecialization);
+  // Filter users based on name, category, and specialization
+  const filteredUsers = user.filter((userData) => {
+    const matchesCategory = selectedCategory === "All" || userData.specialization === selectedCategory;
+    const matchesKeyword = !searchKeyword || userData.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+      userData.specialization.toLowerCase().includes(searchKeyword.toLowerCase());
 
-  const allSpecializations = ["All", ...new Set(user.map((userData) => userData.specialization))];
+    // Return true if the user matches either category or keyword condition
+    return matchesCategory && matchesKeyword;
+  });
 
+  const allSpecializations = [
+    "All",
+    ...new Set(user.map((userData) => userData.specialization)),
+  ];
+
+  const handleDropDown = (e) => {
+    setSelectedCategory(e.target.value);
+  };
 
   return (
     <>
@@ -49,8 +60,8 @@ const Filtermodelsdata = () => {
                   <select
                     id="inputState"
                     className="form-select px-4 w-56 py-4"
-                    onChange={(e) => setSelectedSpecialization(e.target.value)}
-                    value={selectedSpecialization}
+                    onChange={(e) => handleDropDown(e)}
+                    value={selectedCategory}
                   >
                     {allSpecializations.map((specialization) => (
                       <option key={specialization} value={specialization}>
@@ -78,14 +89,13 @@ const Filtermodelsdata = () => {
                         {userData.specialization}
                       </button>
                       <div className="text-white w-12 h-12 border-2 mt-14 rounded-full flex justify-center items-center ml-auto">
-  <Link to={`/model_profile/${userData._id}`}>
-    <i
-      className="fa-solid fa fa-angle-right text-[20px] cursor-pointer"
-      onClick={() => handleModelData(userData._id)} // Add onClick event
-    ></i>
-  </Link>
-</div>
-
+                        <Link to={`/model_profile/${userData._id}`}>
+                          <i
+                            className="fa-solid fa fa-angle-right text-[20px] cursor-pointer"
+                            onClick={() => handleModelData(userData._id)} // Add onClick event
+                          ></i>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 ))}

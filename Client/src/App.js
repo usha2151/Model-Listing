@@ -8,6 +8,7 @@ import Modelsprofile from './components/pages/Modelsprofile/Modelsprofile';
 import SignUp from "./components/forms/SignUp";
 import SignIn from "./components/forms/SignIn";
 
+import Searchallmodels from './components/pages/Allmodels/Searchallmodels';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
          <Route path='/signin' exact element={<SignIn/>} />
          <Route path='/contact_us' exact element={<Contactus/>} />
          <Route path='/model_profile/:id' exact element={<Modelsprofile/>} />
+         <Route path="/modeldata/:keyword/:category" element={<Searchallmodels />} />
       </Routes>
       
     

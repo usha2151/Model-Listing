@@ -27,8 +27,8 @@ const Discovermodelbyexpertise = () => {
     }
   }, null);
 
-  // Log the latest data for debugging purposes
-  console.log("latestData", latestData);
+  
+
 
   return (
     <>
