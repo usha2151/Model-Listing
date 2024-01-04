@@ -193,11 +193,11 @@ export const login = (userData) => async (dispatch) => {
   try {
   
     const response = await axios.post('http://localhost:8080/login', userData);
-    console.log('Login response:', response.data); // Log the response data
+ 
 
     if (response) {
-  if (response.status === 200 && response.data.token) {
-    console.log('Login successful. Token saved.');
+  if (response.status === 200 && response.data.token) { console.log(response);
+   
   } else {
     console.log('Login failed:', response.status, response.data.error);
   }

@@ -8,6 +8,7 @@ import { verifyToken } from "../../Redux/Actions/action";
 const Navbar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
+    console.log('logout');
     console.log(document.cookie);
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     navigate('/signin')
@@ -18,8 +19,7 @@ const Navbar = () => {
   const {user}=useSelector(state=>state.authReducer.user)
   
  
-  // console.log(user.isModel);
-  
+ console.log(user.isModel);
   if(user){
     
  
@@ -78,7 +78,7 @@ const Navbar = () => {
 
 
       {
-  !user ? (
+  !user? (
     <>
        <li className="flex">
         <span>
@@ -99,7 +99,7 @@ const Navbar = () => {
       {/* Display image and name */}
       <div className="flex items-center">
         {
-          user.images && user.isModel &&
+            user.isModel &&user.images&&
         <img src={`http://localhost:8080/public/upload/${user.images[0]}`} alt="User" className="h-8 w-8 rounded-full cursor-pointer" />
         }
         <span className="text-white ml-2 cursor-pointer">{user.name}</span>
@@ -107,9 +107,11 @@ const Navbar = () => {
 
     
         <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow">
-          <button className="text-black" onClick={handleLogout}>
+        <a href="/signin">
+          <button className="text-black" onClick={()=>handleLogout()}>
             Logout
           </button>
+          </a>
           {user.images && user.isModel && (
       <a href="/dashboard" className="text-black">
         Dashboard

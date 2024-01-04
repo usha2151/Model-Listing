@@ -7,8 +7,7 @@ dotenv.config();
 
 
 
-// Login model
-// Login model
+
 export const login = async (req, res) => {
     const { email, password } = req.body;
 
@@ -34,12 +33,12 @@ export const login = async (req, res) => {
             return res.status(401).json({ success: false, error: "Invalid email or password." });
         }
 
-        // If the user belongs to the Models schema, return false; otherwise, return true
+        // If the user belongs to the Models schema, return true; otherwise, return false
         const isModel = !!model;
-        
+
         // If the password is correct, generate a JWT token
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
-        console.log("Login successful. Token generated:", token);
+
         res.header('Access-Control-Allow-Credentials', true);
 
         // Set the token as a cookie with httpOnly and maxAge options
@@ -55,13 +54,11 @@ export const login = async (req, res) => {
         };
 
         // Send the token, user data, and success status in the response
-        res.status(200).json({ success: true, token, user: userData });
-
+        res.status(200).json({ success: true, token, isModel });
     } catch (error) {
         console.log("An error occurred while logging in:", error);
         res.status(500).json({ success: false, error: "An error occurred while logging in." });
     }
 };
-
 
   

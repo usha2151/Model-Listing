@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import {
   HeroVideo,
   worldmodelhuntlogo,
@@ -7,7 +8,6 @@ import {
   Search,
   Meassage,
 } from "../../images";
-import { useNavigate, Link } from "react-router-dom";
 
 const Hero = ({ props }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -21,30 +21,41 @@ const Hero = ({ props }) => {
   const leaveout = () => {
     setIsExpanded(false);
   };
-
+  
   const navigate = useNavigate();
+
   const handleLogout = () => {
     console.log(document.cookie);
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    navigate("/signin");
+    document.cookie =
+      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   };
 
   const handleSearch = () => {
     console.log(selectedCategory);
   };
+  useEffect(() => {
+    const codedToken = document.cookie;
+    const token = codedToken.split("=")[1];
 
+    if (token) {
+     
+    } else {
+     
+    }
+  }, []); 
+  
   return (
     <>
-      <div class="relative w-full h-screen font-sora">
+      <div className="relative w-full h-screen font-sora">
         <video
           src={HeroVideo}
           autoPlay
           muted
           loop
-          class="w-full h-screen object-cover absolute inset-0"
+          className="w-full h-screen object-cover absolute inset-0"
         />
 
-        <div class="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-80 text-white">
+        <div className="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-80 text-white">
           <div className="container mx-auto px-6 md:px-16">
             <nav className="flex justify-center">
               <div
@@ -71,25 +82,25 @@ const Hero = ({ props }) => {
                 </div>
                 {isExpanded && (
                   <div className="text-center py-3 ml-auto mr-6 flex gap-10">
-                    <a href="/all_models" className="text-black">
+                    <Link to="/all_models" className="text-black">
                       All Models
-                    </a>
-                    <a href="/about_us" className="text-black">
+                    </Link>
+                    <Link to="/about_us" className="text-black">
                       About us
-                    </a>
-                    <a href="/contact_us" className="text-black">
+                    </Link>
+                    <Link to="/contact_us" className="text-black">
                       Contact us
-                    </a>
+                    </Link>
 
                     {!props ? (
                       <>
                         <div className="flex">
-                          <a href="/signin" className="text-black">
+                          <Link to="/signin" className="text-black">
                             Login
-                          </a>
-                          <a href="/signup" className="text-black">
+                          </Link>
+                          <Link to="/signup" className="text-black">
                             /Register
-                          </a>
+                          </Link>
                         </div>
                       </>
                     ) : (
@@ -114,16 +125,18 @@ const Hero = ({ props }) => {
                         {/* Dropdown options for logged-in user */}
                         {isExpanded && (
                           <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow">
+                            <a href="/signin">
                             <button
                               className="text-black"
                               onClick={handleLogout}
                             >
                               Logout
                             </button>
+                            </a>
                             {props.images && (
-                              <a href="/dashboard" className="text-black">
+                              <Link to="/dashboard" className="text-black">
                                 Dashboard
-                              </a>
+                              </Link>
                             )}
                           </div>
                         )}
@@ -134,51 +147,51 @@ const Hero = ({ props }) => {
               </div>
             </nav>
 
-            <div class="text-h2 md:text-h1 lg:text-[80px] text-purple font-bold lg:mt-96 sm:mt-72">
+            <div className="text-h2 md:text-h1 lg:text-[80px] text-purple font-bold lg:mt-96 sm:mt-72">
               Find Perfect Models
             </div>
-            <p class="text-[20px] md:text-[25px] lg:text-[40px] md:-mt-4">
+            <p className="text-[20px] md:text-[25px] lg:text-[40px] md:-mt-4">
               Start Your Modeling Journey Now!
             </p>
-            <div class="mt-10 grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-8 justify-center">
+            <div className="mt-10 grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-8 justify-center">
               <div>
-                <label class="text-white lg:text-h6 sm:text-[20px] md:text-[15px]">
+                <label className="text-white lg:text-h6 sm:text-[20px] md:text-[15px]">
                   What you'd like to find?
                 </label>
                 <br />
                 <input
                   type="text"
                   placeholder="Keyword to Search.....?"
-                  class="w-full py-3  mt-2 border-2 border-[#D9D9D9] text-black  lg:text-[15px] sm:text-[20px] md:text-[15px] pl-4"
+                  className="w-full py-3  mt-2 border-2 border-[#D9D9D9] text-black  lg:text-[15px] sm:text-[20px] md:text-[15px] pl-4"
                   onChange={(e) => setSearchInput(e.target.value)}
                 />
               </div>
               <div>
-                <label class="text-white lg:text-h6 sm:text-[20px] md:text-[15px]">
+                <label className="text-white lg:text-h6 sm:text-[20px] md:text-[15px]">
                   In which category?
                 </label>
                 <br />
-                <div class="relative">
+                <div className="relative">
                   <input
                     type="text"
                     placeholder="All Categories ....."
-                    class="w-full py-3  mt-2 border-2 border-[#D9D9D9] text-black  lg:text-[15px] sm:text-[20px] md:text-[15px] pl-4"
+                    className="w-full py-3  mt-2 border-2 border-[#D9D9D9] text-black  lg:text-[15px] sm:text-[20px] md:text-[15px] pl-4"
                     onChange={(e) => setSelectedCategory(e.target.value)}
                   />
-                  <i class="fa-solid fa-caret-down text-black absolute right-4 top-4 lg:text-[30px] sm:text-[40px]"></i>
+                  <i className="fa-solid fa-caret-down text-black absolute right-4 top-4 lg:text-[30px] sm:text-[40px]"></i>
                 </div>
               </div>
             </div>
-            <div class="flex justify-end items-end ml-auto mt-7">
+            <div className="flex justify-end items-end ml-auto mt-7">
               {/* Use Link to navigate to the search-results page */}
               <Link
                 to={`/modeldata/${searchInput}/${selectedCategory}`}
               >
                 <button
-                  class="bg-[purple] text-white py-4  sm:text-h4 lg:text-h5 md:text-h6 px-10"
+                  className="bg-[purple] text-white py-4  sm:text-h4 lg:text-h5 md:text-h6 px-10"
                   onClick={handleSearch}
                 >
-                  <i class="fa-solid fa-search pr-5 mt-2 sm:pr-5"></i>
+                  <i className="fa-solid fa-search pr-5 mt-2 sm:pr-5"></i>
                   SEARCH
                 </button>
               </Link>
@@ -187,7 +200,7 @@ const Hero = ({ props }) => {
         </div>
       </div>
 
-      <div class="bg-black ">
+      <div className="bg-black ">
         <div className="container mx-auto px-12 py-6">
           <div className="grid xl:grid-cols-4 lg:grid-cols-2 gap-8  text-white">
             <div className="flex">
