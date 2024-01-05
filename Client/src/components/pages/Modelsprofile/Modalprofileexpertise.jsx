@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { verifyToken } from "../../../Redux/Actions/action";
-import { Link, useNavigate  } from "react-router-dom";
+import { submitRating, verifyToken } from "../../../Redux/Actions/action";
+import { Link, useNavigate } from "react-router-dom";
 
-const Modalprofileexpertise = (props) => {
+const Modalprofileexpertise = ({ user, pramsId }) => {
   const dispatch = useDispatch();
   const [tokenPresent, setTokenPresent] = useState(false);
   const [previousData, setPreviousData] = useState({
@@ -20,6 +20,12 @@ const Modalprofileexpertise = (props) => {
     rating: "*******4.5",
   });
 
+  const [ratingForm, setRatingForm] = useState({
+    rating: "",
+    title: "",
+    review: "",
+  });
+
   useEffect(() => {
     const codedToken = document.cookie;
     const token = codedToken.split("=")[1];
@@ -31,14 +37,26 @@ const Modalprofileexpertise = (props) => {
       setTokenPresent(false);
     }
   }, [dispatch]);
-const navigate=useNavigate();
+
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRatingForm((prevForm) => ({ ...prevForm, [name]: value }));
+  };
+
   const handleReviewSubmit = () => {
     // Check if the token is present
     if (tokenPresent) {
       // Process the review submission logic here
+      console.log("Submitting Review:", ratingForm);
+      console.log("Params ID:", pramsId);
+      console.log("User:", user);
+      dispatch(submitRating(user,pramsId,ratingForm))
+     
     } else {
       // Redirect to the login page
-      navigate('/signin')
+      navigate("/signin");
     }
   };
   return (
@@ -50,7 +68,7 @@ const navigate=useNavigate();
             <div className="grid m-5 text-white  gap-8">
               <div className="text-h3 text-bold font-sora text-white">
                 {" "}
-                {props.name}{" "}
+                {user?.user?.name}
               </div>
               <div className="font-sora lg:w-4/5 md:w-full sm:full">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -218,28 +236,40 @@ const navigate=useNavigate();
                     Write Your Rating{" "}
                   </p>
                   <div className="p-2">
-                    <input
-                      placeholder="Your Rating"
-                      class="bg-gray w-full mx-auto h-16 p-4"
-                    />
+                  <input
+            type="number"
+            placeholder="Your Rating"
+            name="rating"
+            value={ratingForm.rating}
+            onChange={handleInputChange}
+            className="bg-gray w-full mx-auto h-16 p-4"
+          />
                   </div>
                   <p className="text-purple text-h5 font-bold px-5 font-sora">
                     Title{" "}
                   </p>
                   <div className="p-2">
-                    <input
-                      placeholder="Enter your Title"
-                      class="bg-gray w-full h-16 p-4"
-                    />
+                  <input
+            type="text"
+            placeholder="Enter your Title"
+            name="title"
+            value={ratingForm.title}
+            onChange={handleInputChange}
+            className="bg-gray w-full h-16 p-4"
+          />
                   </div>
                   <p className="text-purple text-h5 font-bold px-5 font-sora">
                     Review{" "}
                   </p>
                   <div className="p-2">
-                    <input
-                      placeholder="Write your review"
-                      class="bg-gray w-full h-24 p-4"
-                    />
+                  <input
+            type="text"
+            placeholder="Write your review"
+            name="review"
+            value={ratingForm.review}
+            onChange={handleInputChange}
+            className="bg-gray w-full h-24 p-4"
+          />
                   </div>
                   <div className="flex justify-center pl-4 mt-7 pb-3">
                     <button

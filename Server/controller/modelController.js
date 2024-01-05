@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import multer from 'multer';
 import path from 'path';
 import nodemailer from 'nodemailer';
+import Rating from '../model/Rating.js'
 
 
 
@@ -141,3 +142,37 @@ export async function sentMail(req, res) {
     res.status(500).json({ status: 'error', error: 'Internal Server Error' });
   }
 }
+
+export const saveRating = async (req, res) => {
+  console.log('Received rating request:', req.params);
+  console.log(req.body);
+
+  try {
+    const { modelId, user } = req.params;
+    const { rating, review, title } = req.body;
+
+    const newRating = new Rating({
+      modelId,
+      user,
+      rating,
+      review,
+      title,
+    });
+
+    await newRating.save();
+
+    // Calculate average rating
+    const ratings = await Rating.find({ modelId });
+    const totalRating = ratings.reduce((acc, rating) => acc + rating.rating, 0);
+    const averageRating = totalRating / ratings.length;
+
+    console.log(newRating);
+
+    res.status(200).json({ message: 'Rating saved successfully', averageRating });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+

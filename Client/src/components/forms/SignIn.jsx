@@ -26,7 +26,7 @@ const SignIn = () => {
       document.cookie = `token=${user.token}; expires=1h; path=/`;
       const codedToken = document.cookie;
       const token = codedToken.split("=")[1];
-      console.log("token", token);
+   
   
       if (token) {
         navigate("/");

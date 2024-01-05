@@ -21,13 +21,12 @@ const Hero = ({ props }) => {
   const leaveout = () => {
     setIsExpanded(false);
   };
-  
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
     console.log(document.cookie);
-    document.cookie =
-      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   };
 
   const handleSearch = () => {
@@ -38,12 +37,10 @@ const Hero = ({ props }) => {
     const token = codedToken.split("=")[1];
 
     if (token) {
-     
     } else {
-     
     }
-  }, []); 
-  
+  }, []);
+
   return (
     <>
       <div className="relative w-full h-screen font-sora">
@@ -126,12 +123,12 @@ const Hero = ({ props }) => {
                         {isExpanded && (
                           <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow">
                             <a href="/signin">
-                            <button
-                              className="text-black"
-                              onClick={handleLogout}
-                            >
-                              Logout
-                            </button>
+                              <button
+                                className="text-black"
+                                onClick={handleLogout}
+                              >
+                                Logout
+                              </button>
                             </a>
                             {props.images && (
                               <Link to="/dashboard" className="text-black">
@@ -184,9 +181,7 @@ const Hero = ({ props }) => {
             </div>
             <div className="flex justify-end items-end ml-auto mt-7">
               {/* Use Link to navigate to the search-results page */}
-              <Link
-                to={`/modeldata/${searchInput}/${selectedCategory}`}
-              >
+              <Link to={`/modeldata/${searchInput}/${selectedCategory}`}>
                 <button
                   className="bg-[purple] text-white py-4  sm:text-h4 lg:text-h5 md:text-h6 px-10"
                   onClick={handleSearch}

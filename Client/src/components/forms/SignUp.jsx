@@ -66,9 +66,7 @@ const SignUp = () => {
 
   const setdatas = (e) => {
     const { name, value } = e.target;
-    setFormUserData({ ...formUserData, [name]: value });
-    
-    
+    setFormUserData({ ...formUserData, [name]: value }); 
   };
 
   console.log('formUserData',formUserData);

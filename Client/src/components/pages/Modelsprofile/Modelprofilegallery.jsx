@@ -1,6 +1,6 @@
 import React from "react";
 
-const Modelprofilegallery = ({ imageprops }) => {
+const Modelprofilegallery = ({ imageprops, userName }) => {
   // Check if imageprops is defined and has at least eight elements
   if (!imageprops || imageprops.length < 8) {
     // Handle the case where imageprops is not valid
@@ -38,6 +38,9 @@ const Modelprofilegallery = ({ imageprops }) => {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="text-white mt-4">
+            <p>{}</p>
           </div>
         </div>
       </div>

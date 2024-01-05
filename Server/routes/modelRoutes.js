@@ -1,12 +1,13 @@
 import express from 'express';
-import { addModels, getModels, upload, getModelsByid, sentMail } from '../controller/modelController.js';
+import { addModels, getModels, upload, getModelsByid, sentMail, saveRating,  } from '../controller/modelController.js';
 
 const router = express.Router();
 
 router.post('/addModels', upload.array('file', 9), addModels)
   .get('/getModels', getModels)
-  .get('/getModels/:id', getModelsByid);
-router.post('/sentmail', sentMail)
-// .get('/verifyModels', verifyToken, verifyModels);
+  .get('/getModels/:id', getModelsByid)
+  .post('/sentmail', sentMail)
+  .post('/submitRating/:modelId/:user', saveRating);
+
 
 export default router;

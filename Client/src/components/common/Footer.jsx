@@ -22,7 +22,7 @@ const Footer = () => {
         email: email,
       });
 
-      console.log(response.data); // Handle server response as needed
+    
     } catch (error) {
       console.error("Error sending subscription request:", error);
     }

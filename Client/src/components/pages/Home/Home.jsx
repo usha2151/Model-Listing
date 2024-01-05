@@ -15,15 +15,16 @@ const Home = () => {
   const navigate = useNavigate();
   const {user}=useSelector(state=>state.authReducer.user)
 
+
   if(user){
     
-  console.log('fjdksafjkdlf',user.email);
+  
   }
   useEffect(() => {
     const codedToken = document.cookie;
     const token=codedToken.split('=')[1]
   
-  console.log(token);
+ 
     if (token) {
       dispatch(verifyToken(token))
     }
@@ -40,7 +41,7 @@ const Home = () => {
     
       <Heading title={"Discover Models by Expertise"}/>
       {/* <div>
-        <img src={`/public/upload/${user.image}`} alt="" />
+        <img src={`/public/upload/${user.images}`} alt="" />
         <p className='text-purple'>dmsfh</p>
       </div> */}
       <Discovermodelbyexpertise/>

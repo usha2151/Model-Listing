@@ -15,10 +15,11 @@ export const LOGIN_MODEL_ERROR = "LOGIN_MODEL_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const MODEL_BY_ID="MODEL_BY_ID";
-
+export const SUBMIT_RATING_SUCCESS = "SUBMIT_RATING_SUCCESS";
+export const SUBMIT_RATING_FAILURE = "SUBMIT_RATING_FAILURE";
 
 // ============================================= this for model all action============================= //
-export function RegisterModel(data) {console.log(data);
+export function RegisterModel(data) {
 
   const formData = new FormData();
   formData.append('name', data.name);
@@ -77,7 +78,7 @@ export const fetchModels = () => {
 
     axios.get("http://localhost:8080/models/getModels") // Replace with your actual API endpoint
       .then((response) => {
-        console.log("Fetched models data:", response.data); // Log data to the console
+        
         dispatch({
           type: FETCH_MODELS_SUCCESS,
           payload: response.data,
@@ -108,7 +109,7 @@ export const verifyToken = (token) => async (dispatch) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("response data", data);
+      
 
         dispatch({
           type: TOKEN_VERIFIED_SUCCESS,
@@ -196,7 +197,7 @@ export const login = (userData) => async (dispatch) => {
  
 
     if (response) {
-  if (response.status === 200 && response.data.token) { console.log(response);
+  if (response.status === 200 && response.data.token&&response.data.isModel) { 
    
   } else {
     console.log('Login failed:', response.status, response.data.error);
@@ -211,4 +212,39 @@ export const login = (userData) => async (dispatch) => {
     console.log('Login error:', error);
     dispatch({ type: 'LOGIN_MODEL_ERROR', payload: error });
   }
+};
+//--------------------------------------------------------------------------------------------------------------------------------------------------------}
+export const submitRating = (user, paramsId,ratingForm) => {
+  return (dispatch) => {console.log('hi');
+    // Make an API call to submit the rating
+    axios
+      .post(`http://localhost:8080/models/submitRating/${paramsId}/${user}`, ratingForm)
+
+      .then((response) => {
+        if (response.status === 201) {
+          // Handle a successful response (status code 201)
+          alert("Rating submitted successfully!");
+
+          dispatch({
+            type: SUBMIT_RATING_SUCCESS,
+            data: response.data, // You can include additional data if needed
+          });
+        } else {
+          // Handle other status codes as needed
+          alert("Server error: " + response.status);
+          dispatch({
+            type: SUBMIT_RATING_FAILURE,
+            error: "Server error",
+          });
+        }
+      })
+      .catch((error) => {
+        // Handle the case where the request fails
+        alert("Error: " + error.message);
+        dispatch({
+          type: SUBMIT_RATING_FAILURE,
+          error: error.message,
+        });
+      });
+  };
 };
